@@ -1,17 +1,35 @@
-import React from 'react'
-import Card from '../Components/Card'
+import React, { useEffect, useState } from 'react';
+import Card from '../Components/Card';
 
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
 
 const Home = () => {
-  return (
-    <main className="" >
-      <h1>Home</h1>
-      <div className='card-grid'>
-        {/* Aqui deberias renderizar las cards */}
-      </div>
-    </main>
-  )
+    const [doct, setDoct] = useState([]);
+
+    const getDoct = async () => {
+        const res = await fetch("https://jsonplaceholder.typicode.com/users");
+        const data = await res.json();
+        setDoct(data);
+    };
+
+    useEffect(() => {
+        getDoct();
+    }, []);
+
+    return (
+        <main className="">
+            <h2>Home</h2>
+            <div className='card-grid'>
+                {doct.map((user) => (
+                    <Card
+                        key={user.id}
+                        id={user.id}
+                        name={user.name}
+                        username={user.username}
+                    />
+                ))}
+            </div>
+        </main>
+    );
 }
 
-export default Home
+export default Home;
