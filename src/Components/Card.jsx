@@ -25,6 +25,7 @@ const Card = ({ name, username, id }) => {
       <h2>{name}</h2>
       <p>{username}</p>
       <p>{id}</p>
+      <img src="../../images/doctor.jpg" alt="Imagen de doct" style={{ width: '200px' }} />
 
       <a href={`/detail/${id}`}>Ver detalles</a>
 

@@ -6,10 +6,9 @@ const Contact = () => {
   const { theme } = useTheme();
 
   return (
-    <div className={`contact ${theme}`}>
-     <p>INGRESE SUS DATOS</p>
+    <section className={`contact ${theme}`}>
       <Form />
-    </div>
+    </section>
   );
 };
 

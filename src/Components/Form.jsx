@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './../Estilos/Form.css';
 
 const Form = () => {
   const [nombre, setNombre] = useState('');
@@ -11,12 +12,23 @@ const Form = () => {
     e.preventDefault();
 
     const erroresFormulario = {};
+
     if (!nombre.trim()) {
       erroresFormulario.nombre = 'El nombre es requerido';
+    } else if (nombre.length < 2) {
+      erroresFormulario.nombre = 'El nombre debe tener al menos 2 letras';
+    } else if (/\d/.test(nombre)) {
+      erroresFormulario.nombre = 'El nombre no debe contener números';
     }
+  
     if (!apellido.trim()) {
       erroresFormulario.apellido = 'El apellido es requerido';
+    } else if (apellido.length < 2) {
+      erroresFormulario.apellido = 'El apellido debe tener al menos 2 letras';
+    } else if (/\d/.test(apellido)) {
+      erroresFormulario.apellido = 'El apellido no debe contener números';
     }
+    
     if (!email.trim()) {
       erroresFormulario.email = 'El email es requerido';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -27,13 +39,17 @@ const Form = () => {
       setErrores(erroresFormulario);
       setMostrarDatos(false); 
     } else {
+      setErrores({});
       setMostrarDatos(true); 
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <section>
+      
+    <form style={{ marginBottom: '370px'}} onSubmit={handleSubmit} className="form">
+    <p>Ingrese sus datos</p>
+      <div className="form-group">
         <label htmlFor="nombre">Nombre:</label>
         <input
           type="text"
@@ -41,9 +57,9 @@ const Form = () => {
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
         />
-        {errores.nombre && <span>{errores.nombre}</span>}
+        {errores.nombre && <span className="error">{errores.nombre}</span>}
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="apellido">Apellido:</label>
         <input
           type="text"
@@ -51,9 +67,9 @@ const Form = () => {
           value={apellido}
           onChange={(e) => setApellido(e.target.value)}
         />
-        {errores.apellido && <span>{errores.apellido}</span>}
+        {errores.apellido && <span className="error">{errores.apellido}</span>}
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -61,21 +77,22 @@ const Form = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        {errores.email && <span>{errores.email}</span>}
+        {errores.email && <span className="error">{errores.email}</span>}
       </div>
-      <button type="submit">Enviar</button>
+      <button type="submit" className="submit-button">Enviar</button>
 
-      
       {mostrarDatos && (
         <div className="mensaje">
-          <p>¡Gracias {nombre} {apellido}!</p>
-          <p>Te contactaremos pronto al correo {email}.</p>
+          <p>¡Gracias {nombre} {apellido}! te contactaremos a la brevedad a través del email: {email}</p>
+          
         </div>
       )}
     </form>
+    </section>
   );
 };
 
 export default Form;
+
 
 

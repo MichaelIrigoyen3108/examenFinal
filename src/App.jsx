@@ -20,7 +20,7 @@ function App() {
           <Route path="/Home" element={<Home />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Favs" element={<Favs />} />
-          <Route path="/Detail" element={<Detail />} />
+          <Route path="/detail/:id" element={<Detail />} />
         </Routes>
         <Footer />
     </div>
