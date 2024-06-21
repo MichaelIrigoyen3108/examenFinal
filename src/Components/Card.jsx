@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { useFeatured } from '../Components/utils/FeaturedContext';
 
-
-
-
 const Card = ({ name, username, id }) => {
   const [isFav, setIsFav] = useState(false);
-  const { state, dispatch } = useFeatured();
+  const { state, addFeatured, removeFeatured } = useFeatured();
 
-  const addFav = () => {
-    setIsFav(!isFav);
+
+  useState(() => {
+    const isFavorite = state.card.some(card => card.id === id);
+    setIsFav(isFavorite);
+  }, [state.card, id]);
+
+  const toggleFavorite = () => {
     if (!isFav) {
-      dispatch({ type: 'ADD_FEATURED', payload: { name, username, id } });
+      addFeatured({ id, name, username });
     } else {
-      dispatch({ type: 'REMOVE_FEATURED', payload: { id } });
+      removeFeatured({ id });
     }
+    setIsFav(!isFav);
   };
 
   return (
@@ -22,11 +25,10 @@ const Card = ({ name, username, id }) => {
       <h2>{name}</h2>
       <p>{username}</p>
       <p>{id}</p>
-      {/* <img src="../images/doctor.jpg" alt="imagen doc" /> */}
 
       <a href={`/detail/${id}`}>Ver detalles</a>
 
-      <button onClick={addFav} className="favButton">
+      <button onClick={toggleFavorite} className="favButton">
         {isFav ? "Remove fav" : "Add fav"}
       </button>
     </div>
@@ -34,5 +36,6 @@ const Card = ({ name, username, id }) => {
 };
 
 export default Card;
+
 
 

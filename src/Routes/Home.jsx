@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../Components/Card';
 
-
 const Home = () => {
-    const [doct, setDoct] = useState([]);
+    const [users, setUsers] = useState([]);
 
-    const getDoct = async () => {
-        const res = await fetch("https://jsonplaceholder.typicode.com/users");
-        const data = await res.json();
-        setDoct(data);
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch("https://jsonplaceholder.typicode.com/users");
+            if (!response.ok) {
+                throw new Error('Error al cargar los datos');
+            }
+            const data = await response.json();
+            setUsers(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
     useEffect(() => {
-        getDoct();
+        fetchUsers();
     }, []);
 
     return (
         <main className="">
             <h2>Home</h2>
             <div className='card-grid'>
-                {doct.map((user) => (
+                {users.map((user) => (
                     <Card
                         key={user.id}
                         id={user.id}

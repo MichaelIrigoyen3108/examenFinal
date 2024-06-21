@@ -1,9 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../Components/themeContext';
+import { useTheme, useToggleTheme } from '../Components/utils/FeaturedContext'; 
 
 const Navbar = () => {
-  const { theme, toggleTheme } = useTheme();
+  const theme = useTheme();
+  const toggleTheme = useToggleTheme();
+
+  const handleToggleTheme = () => {
+    toggleTheme();
+  };
 
   return (
     <nav className={theme}>
@@ -16,9 +21,7 @@ const Navbar = () => {
       <Link to="/Favs" className="nav-link">
         Favoritos
       </Link>
-      <button onClick={toggleTheme}>
-        Cambiar a {theme === 'light' ? 'oscuro' : 'claro'}
-      </button>
+       <button onClick={handleToggleTheme}>Cambiar a {theme === 'light' ? 'oscuro' : 'claro'}</button>
     </nav>
   );
 };

@@ -1,6 +1,6 @@
 
 import Form from '../Components/Form';
-import { useTheme } from '../Components/themeContext';
+import { useTheme } from '../Components/utils/FeaturedContext';
 
 const Contact = () => {
   const { theme } = useTheme();
